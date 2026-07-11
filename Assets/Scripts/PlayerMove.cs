@@ -1,33 +1,74 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
+[DisallowMultipleComponent]
+[RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
+    private const float DefaultSpeed = 5f;
 
-    void Update()
+    [Min(0f)]
+    [SerializeField] private float speed = DefaultSpeed;
+    [Header("Direction Sprites")]
+    [SerializeField] private Sprite idleDown;
+    [SerializeField] private Sprite idleUp;
+    [SerializeField] private Sprite idleLeft;
+    [SerializeField] private Sprite idleRight;
+
+    private SpriteRenderer spriteRenderer;
+
+    private void Awake()
     {
-        float horizontal = 0f;
-        float vertical = 0f;
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if (Input.GetKey(KeyCode.A))
+        if (idleDown != null)
         {
-            horizontal = -1f;
+            spriteRenderer.sprite = idleDown;
         }
-        else if (Input.GetKey(KeyCode.D))
+    }
+
+    private void Update()
+    {
+        Vector2 moveInput = ReadMoveInput();
+        transform.position += (Vector3)(moveInput * speed * Time.deltaTime);
+        UpdateFacingSprite(moveInput);
+    }
+
+    private static Vector2 ReadMoveInput()
+    {
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
         {
-            horizontal = 1f;
+            return Vector2.zero;
         }
 
-        if (Input.GetKey(KeyCode.S))
+        Vector2 input = new(
+            (keyboard.dKey.isPressed ? 1f : 0f) - (keyboard.aKey.isPressed ? 1f : 0f),
+            (keyboard.wKey.isPressed ? 1f : 0f) - (keyboard.sKey.isPressed ? 1f : 0f));
+
+        return input.normalized;
+    }
+
+    private void UpdateFacingSprite(Vector2 moveInput)
+    {
+        if (moveInput == Vector2.zero)
         {
-            vertical = -1f;
-        }
-        else if (Input.GetKey(KeyCode.W))
-        {
-            vertical = 1f;
+            return;
         }
 
-        Vector3 direction = new Vector3(horizontal, vertical, 0f).normalized;
-        transform.position += direction * speed * Time.deltaTime;
+        Sprite nextSprite;
+        if (Mathf.Abs(moveInput.x) > Mathf.Abs(moveInput.y))
+        {
+            nextSprite = moveInput.x > 0f ? idleRight : idleLeft;
+        }
+        else
+        {
+            nextSprite = moveInput.y > 0f ? idleUp : idleDown;
+        }
+
+        if (nextSprite != null)
+        {
+            spriteRenderer.sprite = nextSprite;
+        }
     }
 }
