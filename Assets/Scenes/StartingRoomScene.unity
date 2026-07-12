@@ -439,6 +439,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2239270679451750586, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ec9bfe1d28843e84e8c3493d03479dc6, type: 2}
     - target: {fileID: 4460798810649211590, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.59
@@ -479,6 +483,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5338763211634812770, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: m_Size.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338763211634812770, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: m_Size.y
+      value: 0.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 5338763211634812770, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3629690765963146455, guid: 5370e169ffb3e9d4db45dba4f61bab55, type: 3}
+    - target: {fileID: 5338763211634812770, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: idleUpLeft
+      value: 
+      objectReference: {fileID: -6277260545115476362, guid: 3058d77c5a60cd24aa6b8a9a27d71a0b, type: 3}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: idleUpRight
+      value: 
+      objectReference: {fileID: 6545030222308874136, guid: 3058d77c5a60cd24aa6b8a9a27d71a0b, type: 3}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: idleDownLeft
+      value: 
+      objectReference: {fileID: -7352586689148899563, guid: 3058d77c5a60cd24aa6b8a9a27d71a0b, type: 3}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: idleDownRight
+      value: 
+      objectReference: {fileID: -7090780141962019519, guid: 3058d77c5a60cd24aa6b8a9a27d71a0b, type: 3}
     - target: {fileID: 8367308180187951258, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_Name
       value: Player
