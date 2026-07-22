@@ -1,0 +1,420 @@
+fileFormatVersion: 2
+guid: 1f0d62830fb6f2e48bb660d07a518437
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7289798350959952917
+    second: Eyecube_CloseEye_0
+  - first:
+      213: -7589406651778493442
+    second: Eyecube_CloseEye_1
+  - first:
+      213: -2845378502636808412
+    second: Eyecube_CloseEye_2
+  - first:
+      213: 1855414679967910463
+    second: Eyecube_CloseEye_3
+  - first:
+      213: -5597628593208086449
+    second: Eyecube_CloseEye_4
+  - first:
+      213: -1166649905099428548
+    second: Eyecube_CloseEye_5
+  - first:
+      213: 4519419909468446669
+    second: Eyecube_CloseEye_6
+  - first:
+      213: 1984435525646963327
+    second: Eyecube_CloseEye_7
+  - first:
+      213: -2514176859901815248
+    second: Eyecube_CloseEye_8
+  - first:
+      213: 1846695810689618039
+    second: Eyecube_CloseEye_9
+  - first:
+      213: -6819251607048644288
+    second: Eyecube_CloseEye_10
+  - first:
+      213: 3427780769617549612
+    second: Eyecube_CloseEye_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_Idle
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 622
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bebbdc6d50f65da90800000000000000
+      internalID: -7289798350959952917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_Lightup_0
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 622
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef391c05cd20da690800000000000000
+      internalID: -7589406651778493442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_Lightup_1
+      rect:
+        serializedVersion: 2
+        x: 372
+        y: 622
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 427dccac35f2388d0800000000000000
+      internalID: -2845378502636808412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_Lightup2
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 622
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3a488e22d1cfb910800000000000000
+      internalID: 1855414679967910463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_0
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 370
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f403345b37a3152b0800000000000000
+      internalID: -5597628593208086449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_1
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 370
+        width: 170
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3d2e4da71a3fcfe0800000000000000
+      internalID: -1166649905099428548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_2
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 370
+        width: 170
+        height: 246
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcfd1b6767438be30800000000000000
+      internalID: 4519419909468446669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_3
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 371
+        width: 170
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f725ad9b8912a8b10800000000000000
+      internalID: 1984435525646963327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_4
+      rect:
+        serializedVersion: 2
+        x: 196
+        y: 112
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7705b5c3e08c0a910800000000000000
+      internalID: 1846695810689618039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_5
+      rect:
+        serializedVersion: 2
+        x: 375
+        y: 112
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0499ad71bc62d51a0800000000000000
+      internalID: -6819251607048644288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eyecube_CloseEye_GoTo_South_6_End
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 112
+        width: 170
+        height: 241
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2918f4e27ce19f20800000000000000
+      internalID: 3427780769617549612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 764da740fe719e64fbd9d958435504cb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Eyecube_CloseEye_GoTo_South_0: -5597628593208086449
+      Eyecube_CloseEye_GoTo_South_1: -1166649905099428548
+      Eyecube_CloseEye_GoTo_South_2: 4519419909468446669
+      Eyecube_CloseEye_GoTo_South_3: 1984435525646963327
+      Eyecube_CloseEye_GoTo_South_4: 1846695810689618039
+      Eyecube_CloseEye_GoTo_South_5: -6819251607048644288
+      Eyecube_CloseEye_GoTo_South_6_End: 3427780769617549612
+      Eyecube_CloseEye_Idle: -7289798350959952917
+      Eyecube_CloseEye_Lightup2: 1855414679967910463
+      Eyecube_CloseEye_Lightup_0: -7589406651778493442
+      Eyecube_CloseEye_Lightup_1: -2845378502636808412
+      Eyecube_Eyecube_CloseEye_Idle: -5597628593208086449
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
