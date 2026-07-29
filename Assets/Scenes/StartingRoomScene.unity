@@ -242,7 +242,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.59, y: 0.63, z: 0}
-  m_LocalScale: {x: 0.82291025, y: 0.82291025, z: 0.82291025}
+  m_LocalScale: {x: 2.0739806, y: 2.0739806, z: 2.0739806}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -304,7 +304,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "WE NEED\nPlayer_Move_Left/Right_Down \n"
+  m_text: 'x: dash ( not finish )
+
+    c: attack
+
+    not immediately charging'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -396,6 +400,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420030}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -521,6 +526,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d66781df0548cc47bd0a29801654f08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraFollow
+  target: {fileID: 182805604}
+  smoothSpeed: 5
+  offset: {x: 0, y: 0, z: -10}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,15 +639,15 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ec9bfe1d28843e84e8c3493d03479dc6, type: 2}
     - target: {fileID: 4460798810649211590, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.82291025
+      value: 2.0739806
       objectReference: {fileID: 0}
     - target: {fileID: 4460798810649211590, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.82291025
+      value: 2.0739806
       objectReference: {fileID: 0}
     - target: {fileID: 4460798810649211590, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.82291025
+      value: 2.0739806
       objectReference: {fileID: 0}
     - target: {fileID: 4460798810649211590, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_LocalPosition.x
