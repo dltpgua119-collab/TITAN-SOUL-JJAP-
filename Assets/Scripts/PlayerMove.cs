@@ -42,6 +42,11 @@ public class PlayerMove : MonoBehaviour
             animator.SetFloat(LastMoveXHash, moveInput.x);
             animator.SetFloat(LastMoveYHash, moveInput.y);
         }
+        else if (Mathf.Abs(animator.GetFloat(LastMoveXHash)) < 0.1f && Mathf.Abs(animator.GetFloat(LastMoveYHash)) < 0.1f)
+        {
+            animator.SetFloat(LastMoveXHash, -1f);
+            animator.SetFloat(LastMoveYHash, 0f);
+        }
     }
 
     private static Vector2 ReadMoveInput()
