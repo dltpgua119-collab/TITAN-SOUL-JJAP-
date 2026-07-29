@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Animator))]
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private ArrowController arrowController;
     private const float DefaultSpeed = 5f;
 
     private static readonly int MoveXHash = Animator.StringToHash("MoveX");
@@ -19,6 +20,8 @@ public class PlayerMove : MonoBehaviour
 
     private Animator animator;
 
+    public Vector2 LastFacingDirection => lastFacingDirection;
+
     // 마지막으로 바라본 방향 (대각선 유지용)
     private Vector2 lastFacingDirection = new(-1f, 0f);
     private Vector2 lastNonZeroInput = Vector2.zero;
@@ -28,6 +31,11 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
+
+        if (arrowController != null)
+        {
+            arrowController.Initialize(this);
+        }
 
         animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
         animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
@@ -45,6 +53,23 @@ public class PlayerMove : MonoBehaviour
         Vector2 moveInput = rawMoveInput.normalized;
         bool isCharging = keyboard.cKey.isPressed;
         Vector2 effectiveMoveInput = isCharging ? Vector2.zero : moveInput;
+
+        if (keyboard.cKey.wasReleasedThisFrame && (arrowController == null || !arrowController.IsActiveForRecall))
+        {
+            FireArrow();
+        }
+
+        if (arrowController != null && arrowController.IsActiveForRecall)
+        {
+            if (keyboard.cKey.isPressed)
+            {
+                arrowController.Recall();
+            }
+            else if (arrowController.IsReturning)
+            {
+                arrowController.StopRecall();
+            }
+        }
 
         transform.position += (Vector3)(effectiveMoveInput * speed * Time.deltaTime);
 
@@ -79,6 +104,21 @@ public class PlayerMove : MonoBehaviour
 
         animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
         animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
+    }
+
+    private void FireArrow()
+    {
+        if (arrowController == null)
+        {
+            return;
+        }
+
+        if (!arrowController.CanFire)
+        {
+            return;
+        }
+
+        arrowController.Fire(lastFacingDirection);
     }
 
     private static Vector2 ReadRawMoveInput()
