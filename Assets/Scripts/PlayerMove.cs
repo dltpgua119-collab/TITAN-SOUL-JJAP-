@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     private static readonly int LastMoveXHash = Animator.StringToHash("LastMoveX");
     private static readonly int LastMoveYHash = Animator.StringToHash("LastMoveY");
     private static readonly int IsMovingHash = Animator.StringToHash("IsMoving");
+    private static readonly int IsChargingHash = Animator.StringToHash("IsCharging");
 
     [Min(0f)]
     [SerializeField] private float speed = DefaultSpeed;
@@ -29,15 +30,25 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        Vector2 moveInput = ReadMoveInput();
-        transform.position += (Vector3)(moveInput * speed * Time.deltaTime);
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null)
+        {
+            return;
+        }
 
-        bool isMoving = moveInput.sqrMagnitude > 0f;
+        Vector2 moveInput = ReadMoveInput();
+        bool isCharging = keyboard.cKey.isPressed;
+        Vector2 effectiveMoveInput = isCharging ? Vector2.zero : moveInput;
+
+        transform.position += (Vector3)(effectiveMoveInput * speed * Time.deltaTime);
+
+        bool isMoving = effectiveMoveInput.sqrMagnitude > 0f;
         animator.SetFloat(MoveXHash, moveInput.x);
         animator.SetFloat(MoveYHash, moveInput.y);
         animator.SetBool(IsMovingHash, isMoving);
+        animator.SetBool(IsChargingHash, isCharging);
 
-        if (isMoving)
+        if (moveInput.sqrMagnitude > 0f)
         {
             animator.SetFloat(LastMoveXHash, moveInput.x);
             animator.SetFloat(LastMoveYHash, moveInput.y);
