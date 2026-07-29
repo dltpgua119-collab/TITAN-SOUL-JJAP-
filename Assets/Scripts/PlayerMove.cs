@@ -19,13 +19,18 @@ public class PlayerMove : MonoBehaviour
 
     private Animator animator;
 
+    // 마지막으로 바라본 방향 (대각선 유지용)
+    private Vector2 lastFacingDirection = new(-1f, 0f);
+    private Vector2 lastNonZeroInput = Vector2.zero;
+    private float lastDiagonalTime = 0f;
+    private const float DiagonalGracePeriod = 0.12f; // 대각선 유지 유예 시간 (초)
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
 
-        // 시작할 때 왼쪽 Idle이 선택되도록 기본 방향을 지정한다.
-        animator.SetFloat(LastMoveXHash, -1f);
-        animator.SetFloat(LastMoveYHash, 0f);
+        animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
+        animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
     }
 
     private void Update()
@@ -51,14 +56,29 @@ public class PlayerMove : MonoBehaviour
 
         if (rawMoveInput.sqrMagnitude > 0f)
         {
-            animator.SetFloat(LastMoveXHash, rawMoveInput.x);
-            animator.SetFloat(LastMoveYHash, rawMoveInput.y);
+            bool isDiagonal = rawMoveInput.sqrMagnitude > 1.1f;
+
+            if (isDiagonal)
+            {
+                // 대각선 입력이면 즉시 업데이트 + 시간 기록
+                lastFacingDirection = rawMoveInput;
+                lastDiagonalTime = Time.time;
+            }
+            else if (Time.time - lastDiagonalTime > DiagonalGracePeriod)
+            {
+                // 유예 시간이 지난 뒤에만 카디널로 업데이트
+                lastFacingDirection = rawMoveInput;
+            }
+
+            lastNonZeroInput = rawMoveInput;
         }
-        else if (Mathf.Abs(animator.GetFloat(LastMoveXHash)) < 0.1f && Mathf.Abs(animator.GetFloat(LastMoveYHash)) < 0.1f)
+        else
         {
-            animator.SetFloat(LastMoveXHash, -1f);
-            animator.SetFloat(LastMoveYHash, 0f);
+            lastNonZeroInput = Vector2.zero;
         }
+
+        animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
+        animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
     }
 
     private static Vector2 ReadRawMoveInput()
