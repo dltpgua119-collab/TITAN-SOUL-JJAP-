@@ -36,7 +36,8 @@ public class PlayerMove : MonoBehaviour
             return;
         }
 
-        Vector2 moveInput = ReadMoveInput();
+        Vector2 rawMoveInput = ReadRawMoveInput();
+        Vector2 moveInput = rawMoveInput.normalized;
         bool isCharging = keyboard.cKey.isPressed;
         Vector2 effectiveMoveInput = isCharging ? Vector2.zero : moveInput;
 
@@ -48,10 +49,10 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool(IsMovingHash, isMoving);
         animator.SetBool(IsChargingHash, isCharging);
 
-        if (moveInput.sqrMagnitude > 0f)
+        if (rawMoveInput.sqrMagnitude > 0f)
         {
-            animator.SetFloat(LastMoveXHash, moveInput.x);
-            animator.SetFloat(LastMoveYHash, moveInput.y);
+            animator.SetFloat(LastMoveXHash, rawMoveInput.x);
+            animator.SetFloat(LastMoveYHash, rawMoveInput.y);
         }
         else if (Mathf.Abs(animator.GetFloat(LastMoveXHash)) < 0.1f && Mathf.Abs(animator.GetFloat(LastMoveYHash)) < 0.1f)
         {
@@ -60,7 +61,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private static Vector2 ReadMoveInput()
+    private static Vector2 ReadRawMoveInput()
     {
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null)
@@ -68,10 +69,8 @@ public class PlayerMove : MonoBehaviour
             return Vector2.zero;
         }
 
-        Vector2 input = new(
+        return new Vector2(
             (keyboard.rightArrowKey.isPressed ? 1f : 0f) - (keyboard.leftArrowKey.isPressed ? 1f : 0f),
             (keyboard.upArrowKey.isPressed ? 1f : 0f) - (keyboard.downArrowKey.isPressed ? 1f : 0f));
-
-        return input.normalized;
     }
 }
