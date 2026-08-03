@@ -869,9 +869,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 155840bf05434894a9e8c832a8b162b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ArrowController
-  speed: 8
-  recallSpeed: 12
+  speed: 15
+  flyFriction: 8
+  recallAcceleration: 20
+  recallMaxSpeed: 20
+  recallDeceleration: 25
   returnDistanceThreshold: 0.1
+  playerTouchGraceDuration: 0.7
 --- !u!70 &1727673018
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

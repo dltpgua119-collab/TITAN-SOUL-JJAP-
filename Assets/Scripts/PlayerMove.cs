@@ -61,7 +61,8 @@ public class PlayerMove : MonoBehaviour
             cKeyUsedForRecall = false;
 
         bool isCharging = keyboard.cKey.isPressed && !arrowIsOut && !cKeyUsedForRecall;
-        Vector2 effectiveMoveInput = isCharging ? Vector2.zero : moveInput;
+        bool isRecalling = arrowIsOut && keyboard.cKey.isPressed;
+        Vector2 effectiveMoveInput = (isCharging || isRecalling) ? Vector2.zero : moveInput;
 
         if (!arrowIsOut)
         {
