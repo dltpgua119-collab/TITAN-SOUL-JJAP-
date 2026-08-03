@@ -19,6 +19,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float speed = DefaultSpeed;
 
     private Animator animator;
+    private float cKeyPressedTime = -1f;
+    private const float MinChargeTime = 0.3f;
+    private bool cKeyUsedForRecall = false;
 
     public Vector2 LastFacingDirection => lastFacingDirection;
 
@@ -51,21 +54,41 @@ public class PlayerMove : MonoBehaviour
 
         Vector2 rawMoveInput = ReadRawMoveInput();
         Vector2 moveInput = rawMoveInput.normalized;
-        bool isCharging = keyboard.cKey.isPressed;
+        bool arrowIsOut = arrowController != null && arrowController.IsActiveForRecall;
+
+        // C 떼면 recall 플래그 초기화
+        if (keyboard.cKey.wasReleasedThisFrame)
+            cKeyUsedForRecall = false;
+
+        bool isCharging = keyboard.cKey.isPressed && !arrowIsOut && !cKeyUsedForRecall;
         Vector2 effectiveMoveInput = isCharging ? Vector2.zero : moveInput;
 
-        if (keyboard.cKey.wasReleasedThisFrame && (arrowController == null || !arrowController.IsActiveForRecall))
+        if (!arrowIsOut)
         {
-            FireArrow();
-        }
+            if (keyboard.cKey.wasPressedThisFrame && !cKeyUsedForRecall)
+            {
+                cKeyPressedTime = Time.time;
+            }
 
-        if (arrowController != null && arrowController.IsActiveForRecall)
+            if (keyboard.cKey.wasReleasedThisFrame && !cKeyUsedForRecall)
+            {
+                if (cKeyPressedTime >= 0f && Time.time - cKeyPressedTime >= MinChargeTime)
+                {
+                    FireArrow();
+                }
+                cKeyPressedTime = -1f;
+            }
+        }
+        else
         {
+            cKeyPressedTime = -1f;
+
             if (keyboard.cKey.isPressed)
             {
+                cKeyUsedForRecall = true;
                 arrowController.Recall();
             }
-            else if (arrowController.IsReturning)
+            else if (arrowController.IsReturning && !keyboard.cKey.isPressed)
             {
                 arrowController.StopRecall();
             }
