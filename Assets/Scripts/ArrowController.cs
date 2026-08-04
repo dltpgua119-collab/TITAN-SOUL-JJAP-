@@ -145,6 +145,18 @@ public class ArrowController : MonoBehaviour
             }
         }
 
+        // 벽 충돌 체크
+        Vector2 currentPos = transform.position;
+        Vector2 nextPos = currentPos + recallVelocity * Time.deltaTime;
+        if (wallLayerMask != 0 && Physics2D.Linecast(currentPos, nextPos, wallLayerMask))
+        {
+            recallVelocity = Vector2.zero;
+            isReturning = false;
+            isDecelerating = false;
+            isStuck = true;
+            return;
+        }
+
         transform.position += (Vector3)(recallVelocity * Time.deltaTime);
     }
 
