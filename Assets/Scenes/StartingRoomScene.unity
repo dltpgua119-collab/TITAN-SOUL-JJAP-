@@ -325,12 +325,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
   arrowController: {fileID: 1727673017}
-  mainCamera: {fileID: 0}
+  mainCamera: {fileID: 519420031}
   defaultCameraSize: 6
   chargedCameraSize: 5
   cameraZoomOutDuration: 0.2
+  maxCameraOffset: 3.5
+  cameraOffsetReturnDuration: 0.2
+  cameraOffsetShiftDuration: 0.15
   globalVolume: {fileID: 1929778110}
-  maxVignetteIntensity: 0.5
+  maxVignetteIntensity: 0.35
   maxVignetteSmoothness: 0.5
   speed: 7
   minChargeTime: 0.25
@@ -1145,12 +1148,24 @@ PrefabInstance:
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: maxCameraOffset
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: chargedCameraSize
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: defaultCameraSize
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: maxVignetteIntensity
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7136018813366536424, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
+      propertyPath: cameraOffsetShiftDuration
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8367308180187951258, guid: 4d3fb9775f70c5e41a95c8af2218f3e9, type: 3}
       propertyPath: m_Name
@@ -1301,7 +1316,7 @@ MonoBehaviour:
   recallAcceleration: 20
   recallMaxSpeed: 20
   recallDeceleration: 25
-  returnDistanceThreshold: 0.1
+  returnDistanceThreshold: 0.2
   playerTouchGraceDuration: 0.7
   minStickSpeed: 10
   popEffect: {fileID: 326996020}
@@ -1339,9 +1354,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.04282181, y: -0.040680468}
-  m_Size: {x: 0.42, y: 0.32}
-  m_Direction: 0
+  m_Offset: {x: 0.042821813, y: 0.0001793304}
+  m_Size: {x: 0.4200001, y: 0.2728658}
+  m_Direction: 1
 --- !u!50 &1727673019
 Rigidbody2D:
   serializedVersion: 5
@@ -1436,8 +1451,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727673016}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.86, y: 2.64, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.86609244, y: 2.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

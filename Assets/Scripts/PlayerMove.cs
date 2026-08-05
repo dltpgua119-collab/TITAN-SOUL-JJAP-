@@ -15,6 +15,14 @@ public class PlayerMove : MonoBehaviour
     private float zoomOutStartTime = -1f;
     private float zoomOutStartSize = 5f;
 
+    [Header("Camera Offset")]
+    [SerializeField] private float maxCameraOffset = 2f;
+    [SerializeField] private float cameraOffsetReturnDuration = 0.2f;
+    [SerializeField] private float cameraOffsetShiftDuration = 0.2f;
+    private float offsetReturnStartTime = -1f;
+    private Vector2 currentCameraOffset = Vector2.zero;
+    private Vector2 targetCameraOffset = Vector2.zero;
+
     [Header("Vignette")]
     [SerializeField] private Volume globalVolume;
     [SerializeField] [Range(0f, 1f)] private float maxVignetteIntensity = 0.5f;
@@ -149,6 +157,7 @@ public class PlayerMove : MonoBehaviour
         animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
 
         UpdateCameraZoom(isCharging);
+        UpdateCameraOffset(isCharging);
         UpdateVignette(isCharging);
     }
 
@@ -173,6 +182,32 @@ public class PlayerMove : MonoBehaviour
             float t = Mathf.Clamp01((Time.time - zoomOutStartTime) / cameraZoomOutDuration);
             mainCamera.orthographicSize = Mathf.Lerp(zoomOutStartSize, defaultCameraSize, t);
         }
+    }
+
+    private void UpdateCameraOffset(bool isCharging)
+    {
+        if (mainCamera == null) return;
+
+        Vector3 basePos = transform.position;
+        basePos.z = mainCamera.transform.position.z;
+
+        if (isCharging && cKeyPressedTime >= 0f)
+        {
+            offsetReturnStartTime = -1f;
+            float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - minChargeTime);
+            float chargeRatio = Mathf.Clamp01(heldTime / (maxChargeTime - minChargeTime));
+            targetCameraOffset = lastFacingDirection.normalized * (maxCameraOffset * chargeRatio);
+            float speed = cameraOffsetShiftDuration > 0f ? 1f / cameraOffsetShiftDuration : 100f;
+            currentCameraOffset = Vector2.MoveTowards(currentCameraOffset, targetCameraOffset, speed * maxCameraOffset * Time.deltaTime);
+        }
+        else
+        {
+            targetCameraOffset = Vector2.zero;
+            float speed = cameraOffsetReturnDuration > 0f ? 1f / cameraOffsetReturnDuration : 100f;
+            currentCameraOffset = Vector2.MoveTowards(currentCameraOffset, Vector2.zero, speed * maxCameraOffset * Time.deltaTime);
+        }
+
+        mainCamera.transform.position = basePos + new Vector3(currentCameraOffset.x, currentCameraOffset.y, 0f);
     }
 
     private void UpdateVignette(bool isCharging)
