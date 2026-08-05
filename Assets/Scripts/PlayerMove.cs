@@ -1,11 +1,25 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Animator))]
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private ArrowController arrowController;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float defaultCameraSize = 5f;
+    [SerializeField] private float chargedCameraSize = 3f;
+    [SerializeField] private float cameraZoomOutDuration = 0.2f;
+    private float zoomOutStartTime = -1f;
+    private float zoomOutStartSize = 5f;
+
+    [Header("Vignette")]
+    [SerializeField] private Volume globalVolume;
+    [SerializeField] [Range(0f, 1f)] private float maxVignetteIntensity = 0.5f;
+    [SerializeField] [Range(0f, 1f)] private float maxVignetteSmoothness = 0.5f;
+    private Vignette vignette;
     private const float DefaultSpeed = 5f;
 
     private static readonly int MoveXHash = Animator.StringToHash("MoveX");
@@ -20,8 +34,8 @@ public class PlayerMove : MonoBehaviour
 
     private Animator animator;
     private float cKeyPressedTime = -1f;
-    private const float MinChargeTime = 0.3f;
-    private const float MaxChargeTime = 1.5f;  // 풀 차징까지 걸리는 시간 (초)
+    [SerializeField] private float minChargeTime = 0.3f;
+    [SerializeField] private float maxChargeTime = 1.5f;
     private bool cKeyUsedForRecall = false;
 
     public Vector2 LastFacingDirection => lastFacingDirection;
@@ -37,9 +51,13 @@ public class PlayerMove : MonoBehaviour
         animator = GetComponent<Animator>();
 
         if (arrowController != null)
-        {
             arrowController.Initialize(this);
-        }
+
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
+        if (globalVolume != null)
+            globalVolume.profile.TryGet(out vignette);
 
         animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
         animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
@@ -74,7 +92,7 @@ public class PlayerMove : MonoBehaviour
 
             if (keyboard.cKey.wasReleasedThisFrame && !cKeyUsedForRecall)
             {
-                if (cKeyPressedTime >= 0f && Time.time - cKeyPressedTime >= MinChargeTime)
+                if (cKeyPressedTime >= 0f && Time.time - cKeyPressedTime >= minChargeTime)
                 {
                     FireArrow();
                 }
@@ -129,14 +147,55 @@ public class PlayerMove : MonoBehaviour
 
         animator.SetFloat(LastMoveXHash, lastFacingDirection.x);
         animator.SetFloat(LastMoveYHash, lastFacingDirection.y);
+
+        UpdateCameraZoom(isCharging);
+        UpdateVignette(isCharging);
+    }
+
+    private void UpdateCameraZoom(bool isCharging)
+    {
+        if (mainCamera == null) return;
+
+        if (isCharging && cKeyPressedTime >= 0f)
+        {
+            zoomOutStartTime = -1f;
+            float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - minChargeTime);
+            float chargeRatio = Mathf.Clamp01(heldTime / (maxChargeTime - minChargeTime));
+            mainCamera.orthographicSize = Mathf.Lerp(defaultCameraSize, chargedCameraSize, chargeRatio);
+        }
+        else
+        {
+            if (zoomOutStartTime < 0f)
+            {
+                zoomOutStartTime = Time.time;
+                zoomOutStartSize = mainCamera.orthographicSize;
+            }
+            float t = Mathf.Clamp01((Time.time - zoomOutStartTime) / cameraZoomOutDuration);
+            mainCamera.orthographicSize = Mathf.Lerp(zoomOutStartSize, defaultCameraSize, t);
+        }
+    }
+
+    private void UpdateVignette(bool isCharging)
+    {
+        if (vignette == null) return;
+
+        float chargeRatio = 0f;
+        if (isCharging && cKeyPressedTime >= 0f)
+        {
+            float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - minChargeTime);
+            chargeRatio = Mathf.Clamp01(heldTime / (maxChargeTime - minChargeTime));
+        }
+
+        vignette.intensity.value = Mathf.Lerp(0f, maxVignetteIntensity, chargeRatio);
+        vignette.smoothness.value = Mathf.Lerp(0f, maxVignetteSmoothness, chargeRatio);
     }
 
     private void FireArrow()
     {
         if (arrowController == null || !arrowController.CanFire) return;
 
-        float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - MinChargeTime);
-        float chargeRatio = Mathf.Clamp01(heldTime / (MaxChargeTime - MinChargeTime));
+        float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - minChargeTime);
+        float chargeRatio = Mathf.Clamp01(heldTime / (maxChargeTime - minChargeTime));
         arrowController.Fire(lastFacingDirection, chargeRatio);
     }
 

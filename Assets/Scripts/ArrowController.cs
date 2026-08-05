@@ -11,6 +11,7 @@ public class ArrowController : MonoBehaviour
     [SerializeField] private float returnDistanceThreshold = 0.1f;
     [SerializeField] private float playerTouchGraceDuration = 0.7f;
 
+    [SerializeField] private ArrowPopEffect popEffect;
     private PlayerMove owner;
     private Vector2 direction = Vector2.right;
     private bool isFlying;
@@ -171,5 +172,7 @@ public class ArrowController : MonoBehaviour
         isStuck = false;
         recallVelocity = Vector2.zero;
         gameObject.SetActive(false);
+
+        if (popEffect != null) popEffect.Play();
     }
 }
