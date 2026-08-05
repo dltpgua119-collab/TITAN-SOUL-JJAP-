@@ -21,6 +21,7 @@ public class PlayerMove : MonoBehaviour
     private Animator animator;
     private float cKeyPressedTime = -1f;
     private const float MinChargeTime = 0.3f;
+    private const float MaxChargeTime = 1.5f;  // 풀 차징까지 걸리는 시간 (초)
     private bool cKeyUsedForRecall = false;
 
     public Vector2 LastFacingDirection => lastFacingDirection;
@@ -132,17 +133,11 @@ public class PlayerMove : MonoBehaviour
 
     private void FireArrow()
     {
-        if (arrowController == null)
-        {
-            return;
-        }
+        if (arrowController == null || !arrowController.CanFire) return;
 
-        if (!arrowController.CanFire)
-        {
-            return;
-        }
-
-        arrowController.Fire(lastFacingDirection);
+        float heldTime = Mathf.Max(0f, Time.time - cKeyPressedTime - MinChargeTime);
+        float chargeRatio = Mathf.Clamp01(heldTime / (MaxChargeTime - MinChargeTime));
+        arrowController.Fire(lastFacingDirection, chargeRatio);
     }
 
     private static Vector2 ReadRawMoveInput()

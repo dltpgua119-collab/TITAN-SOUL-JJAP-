@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class ArrowController : MonoBehaviour
 {
-    [SerializeField] private float speed = 15f;               // 발사 초기 속도
+    [SerializeField] private float minSpeed = 5f;              // 최소 발사 속도 (최소 차징)
+    [SerializeField] private float maxSpeed = 20f;             // 최대 발사 속도 (풀 차징)
     [SerializeField] private float flyFriction = 8f;          // 발사 마찰 (클수록 빨리 멈춤)
     [SerializeField] private float recallAcceleration = 20f;  // 회수 가속도
     [SerializeField] private float recallMaxSpeed = 20f;      // 회수 최대 속도
@@ -46,7 +47,7 @@ public class ArrowController : MonoBehaviour
         }
     }
 
-    public void Fire(Vector2 firingDirection)
+    public void Fire(Vector2 firingDirection, float chargeRatio = 1f)
     {
         if (!CanFire || owner == null) return;
 
@@ -55,7 +56,7 @@ public class ArrowController : MonoBehaviour
         isReturning = false;
         isStuck = false;
         fireStartedAtTime = Time.time;
-        currentSpeed = speed;
+        currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, chargeRatio);
         recallVelocity = Vector2.zero;
         transform.SetParent(null, true);
         transform.position = owner.transform.position;
