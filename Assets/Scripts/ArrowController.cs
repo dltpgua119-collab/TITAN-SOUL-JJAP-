@@ -10,6 +10,7 @@ public class ArrowController : MonoBehaviour
     [SerializeField] private float recallDeceleration = 15f;  // C 뗐을 때 감속도
     [SerializeField] private float returnDistanceThreshold = 0.1f;
     [SerializeField] private float playerTouchGraceDuration = 0.7f;
+    [SerializeField] private float minStickSpeed = 10f;  // 이 속도 이상이어야 물체에 박힘
 
     [SerializeField] private ArrowPopEffect popEffect;
     private PlayerMove owner;
@@ -18,19 +19,24 @@ public class ArrowController : MonoBehaviour
     private bool isReturning;
     private bool isDecelerating;
     private bool isStuck;
+    private bool isStuckInObject;           // PullableObject에 박힌 상태
+    private PullableObject stuckObject;     // 박힌 물체
+    private float pullHeldTime = 0f;        // C 누른 누적 시간
     private int wallLayerMask = -1;
+    private int pullableLayerMask = -1;
     private float fireStartedAtTime = -1f;
     private float currentSpeed = 0f;       // 현재 발사 속도
     private Vector2 recallVelocity;        // 현재 회수 속도
 
-    public bool CanFire => owner != null && !isFlying && !isReturning && !isStuck;
-    public bool IsActiveForRecall => isFlying || isStuck || isReturning || isDecelerating;
+    public bool CanFire => owner != null && !isFlying && !isReturning && !isStuck && !isStuckInObject;
+    public bool IsActiveForRecall => isFlying || isStuck || isStuckInObject || isReturning || isDecelerating;
     public bool IsReturning => isReturning;
 
     public void Initialize(PlayerMove playerOwner)
     {
         owner = playerOwner;
         wallLayerMask = LayerMask.GetMask("wall");
+        pullableLayerMask = LayerMask.GetMask("pullable");
         gameObject.SetActive(false);
     }
 
@@ -41,6 +47,10 @@ public class ArrowController : MonoBehaviour
         if (isFlying)
         {
             MoveForward();
+        }
+        else if (isStuckInObject)
+        {
+            // 아무것도 안 함 - Recall()에서 처리
         }
         else if (isReturning || isDecelerating)
         {
@@ -56,6 +66,9 @@ public class ArrowController : MonoBehaviour
         isFlying = true;
         isReturning = false;
         isStuck = false;
+        isStuckInObject = false;
+        stuckObject = null;
+        pullHeldTime = 0f;
         fireStartedAtTime = Time.time;
         currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, chargeRatio);
         recallVelocity = Vector2.zero;
@@ -69,7 +82,29 @@ public class ArrowController : MonoBehaviour
 
     public void Recall()
     {
-        if (owner == null || (!isFlying && !isStuck)) return;
+        if (owner == null) return;
+
+        if (isStuckInObject && stuckObject != null)
+        {
+            pullHeldTime += Time.deltaTime;
+
+            // 뽑히기 전까지 속도는 미리 쌓되 위치는 안 움직임
+            Vector2 toPlayer = (Vector2)owner.transform.position - (Vector2)transform.position;
+            recallVelocity += toPlayer.normalized * (recallAcceleration * Time.deltaTime);
+            if (recallVelocity.magnitude > recallMaxSpeed)
+                recallVelocity = recallVelocity.normalized * recallMaxSpeed;
+
+            if (pullHeldTime >= stuckObject.pullDuration)
+            {
+                isStuckInObject = false;
+                stuckObject = null;
+                pullHeldTime = 0f;
+                isReturning = true;
+            }
+            return;
+        }
+
+        if (!isFlying && !isStuck) return;
 
         isReturning = true;
         isFlying = false;
@@ -79,6 +114,12 @@ public class ArrowController : MonoBehaviour
 
     public void StopRecall()
     {
+        if (isStuckInObject)
+        {
+            pullHeldTime = 0f;
+            return;
+        }
+
         if (!isReturning) return;
         isReturning = false;
         isDecelerating = true;
@@ -106,6 +147,24 @@ public class ArrowController : MonoBehaviour
             isStuck = true;
             transform.position = currentPosition;
             return;
+        }
+
+        if (pullableLayerMask != 0 && currentSpeed >= minStickSpeed)
+        {
+            RaycastHit2D hit = Physics2D.Linecast(currentPosition, nextPosition, pullableLayerMask);
+            if (hit.collider != null)
+            {
+                PullableObject obj = hit.collider.GetComponent<PullableObject>();
+                if (obj != null)
+                {
+                    isFlying = false;
+                    isStuckInObject = true;
+                    stuckObject = obj;
+                    pullHeldTime = 0f;
+                    transform.position = currentPosition;
+                    return;
+                }
+            }
         }
 
         transform.position = nextPosition;
